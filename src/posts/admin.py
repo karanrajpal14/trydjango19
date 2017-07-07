@@ -1,0 +1,15 @@
+from django.contrib import admin
+
+# Register your models here.
+from .models import Post
+
+class PostModelAdmin(admin.ModelAdmin):
+	list_display = ["title","posted","last_updated"]
+	list_display_links = ["last_updated"]
+	list_filter = ["posted","last_updated"]
+	list_editable = ["title"]
+	search_fields = ["title", "content"]
+	class Meta:
+		model = Post
+
+admin.site.register(Post, PostModelAdmin)
