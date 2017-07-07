@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Post
 from .forms import PostForm
+from django.contrib import messages
 
 def post_create(request):
 	form = PostForm(request.POST or None)
@@ -10,7 +11,12 @@ def post_create(request):
 		print(form.cleaned_data.get("title"))
 		print(form.cleaned_data.get("content"))
 		instance.save()
+		messages.success(request, "Successfully created post", extra_tags='random_tag')
 		return HttpResponseRedirect(instance.get_absolute_url())
+	elif form.errors:
+		messages.error(request, "Could not create post")
+	else:
+		pass
 	context = {
 		"form" : form
 	}
@@ -22,7 +28,12 @@ def post_update(request, id=None):
 	if form.is_valid():
 		instance = form.save(commit=False)
 		instance.save()
+		messages.success(request, "<a href='#'>Post Saved</a>", extra_tags='html_safe')
 		return HttpResponseRedirect(instance.get_absolute_url())
+	elif form.errors:
+		messages.error(request, "Could not edit post")
+	else:
+		pass
 	context = {
 		"title" : instance.title,
 		"instance" : instance,
