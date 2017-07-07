@@ -4,7 +4,11 @@
 	<title>Create post</title>
 </head>
 <body>
-<h1>Create Post</h1>
-{{ form.as_p }}
+	<h1>Create Post</h1>
+	<form method="POST" action="">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="Submit" name="Create Post">
+	</form>
 </body>
 </html>

@@ -7,6 +7,12 @@ from .forms import PostForm
 
 def post_create(request):
 	form = PostForm()
+	if request.method == "POST":
+		title = request.POST.get("title")
+		content = request.POST.get("content")
+		print("Title: " + title)
+		print("Content: " + content)
+		Post.objects.create(title)
 	context = {
 		"form" : form
 	}
