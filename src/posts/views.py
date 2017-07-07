@@ -6,13 +6,18 @@ from .forms import PostForm
 # Create your views here.
 
 def post_create(request):
-	form = PostForm()
-	if request.method == "POST":
-		title = request.POST.get("title")
-		content = request.POST.get("content")
-		print("Title: " + title)
-		print("Content: " + content)
-		Post.objects.create(title)
+	form = PostForm(request.POST or None)
+	if form.is_valid():
+		instance = form.save(commit=False)
+		print(form.cleaned_data.get("title"))
+		print(form.cleaned_data.get("content"))
+		instance.save()
+	# if request.method == "POST":
+	# 	title = request.POST.get("title")
+	# 	content = request.POST.get("content")
+	# 	print("Title: " + title)
+	# 	print("Content: " + content)
+	# 	Post.objects.create(title)
 	context = {
 		"form" : form
 	}
