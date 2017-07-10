@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ function }} is working!</h1>
+{% for post in listOfPosts %}
+<a href='/posts/{{ post.id }}/'>{{ post.title }}</a><br>
+<a href='{% url "posts:detail" id=post.id %}'>{{ post.content }}</a><br>
+<a href="{{ post.get_absolute_url }}">{{ post.posted }}</a><br>
+{{ post.last_updated }}<br><br>
+{% endfor %}
+{% endblock content %}
