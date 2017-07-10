@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
 {% block head_title %}
-    {{ instance.title }} | {{ block.super }}
+{{ instance.title }} | {{ block.super }}
 {% endblock head_title %}
 
 {% block content %}
-{{ instance.title }}<br>
-{{ instance.content }}<br>
-{{ instance.posted }}<br>
-{{ instance.last_updated }}<br>
+
+<div class="col-sm-6 col-sm-offset-3">
+    <h1>{{ instance.title }} <small>{{ instance.posted }}</small></h1>
+    {{ instance.content | linebreaks }}
+</div>
+
 {% endblock content %}

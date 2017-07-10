@@ -1,10 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{ function }} is working!</h1>
-{% for post in listOfPosts %}
-<a href='/posts/{{ post.id }}/'>{{ post.title }}</a><br>
-<a href='{% url "posts:detail" id=post.id %}'>{{ post.content }}</a><br>
-<a href="{{ post.get_absolute_url }}">{{ post.posted }}</a><br>
-{{ post.last_updated }}<br><br>
-{% endfor %}
+
+<div class="col-sm-6 col-sm-offset-3">
+	<h1>{{ function }}</h1>
+	<div class="row">
+		{% for post in listOfPosts %}
+		<div>
+			<div class="col-sm-12">
+				<div class="thumbnail">
+					<!-- <img src="..." alt="..."> -->
+					<div class="caption">
+						<h3><a href='/posts/{{ post.id }}/'>{{ post.title }}</a> <small><a href="{{ post.get_absolute_url }}">{{ post.posted | timesince }} ago</a></small></h3>
+						<p><a href='{% url "posts:detail" id=post.id %}'><!-- {% lorem %} -->{{ post.content | truncatechars:140 | linebreaks }}</a></p>
+						<p><a href="{{ post.get_absolute_url }}" class="btn btn-primary" role="button">View Post</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- {% cycle "" "<div class='col-sm-12'></div></div><div class='row'>" %} -->
+		{% endfor %}
+	</div>
+</div>
 {% endblock content %}
