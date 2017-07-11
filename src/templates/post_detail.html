@@ -7,8 +7,11 @@
 {% block content %}
 
 <div class="col-sm-6 col-sm-offset-3">
-    <h1>{{ instance.title }} <small>{{ instance.posted }}</small></h1>
-    {{ instance.content | linebreaks }}
+	<h1>{{ instance.title }} <small>{{ instance.posted }}</small></h1>
+	{% if instance.image %}
+	<img src="{{ instance.image.url }}" class="img-responsive">
+	{% endif %}
+	{{ instance.content | linebreaks }}
 </div>
 
 {% endblock content %}
