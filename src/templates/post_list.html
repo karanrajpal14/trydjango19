@@ -3,6 +3,7 @@
 
 <div class="col-sm-6 col-sm-offset-3">
 	<h1>{{ function }}</h1>
+	
 	<div class="row">
 		{% for post in listOfPosts %}
 		<div>
@@ -20,5 +21,22 @@
 		<!-- {% cycle "" "<div class='col-sm-12'></div></div><div class='row'>" %} -->
 		{% endfor %}
 	</div>
+
+	<div class="pagination">
+		<span class="step-links">
+			{% if listOfPosts.has_previous %}
+			<a href="?page={{ listOfPosts.previous_page_number }}">previous</a>
+			{% endif %}
+
+			<span class="current">
+				Page {{ listOfPosts.number }} of {{ listOfPosts.paginator.num_pages }}.
+			</span>
+
+			{% if listOfPosts.has_next %}
+			<a href="?page={{ listOfPosts.next_page_number }}">next</a>
+			{% endif %}
+		</span>
+	</div>
+
 </div>
 {% endblock content %}

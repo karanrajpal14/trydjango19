@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Post
 from .forms import PostForm
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def post_create(request):
 	form = PostForm(request.POST or None)
@@ -49,7 +50,23 @@ def post_detail(request, id=None):
 	return render(request, "post_detail.html", context)
 
 def post_list(request):
-	querySet = Post.objects.all()
+	# Ordering by latest post
+	# Can also do this in the model directly
+	querySet_list = Post.objects.all()#.order_by("-posted")
+
+	paginator = Paginator(querySet_list, 10) # Show 25 querySet per page
+
+	page_request_var = 'page'
+	page = request.GET.get(page_request_var)
+	try:
+		querySet = paginator.page(page)
+	except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+		querySet = paginator.page(1)
+	except EmptyPage:
+		# If page is out of range (e.g. 9999), deliver last page of results.
+		querySet = paginator.page(paginator.num_pages)
+
 	context = {
 		"listOfPosts" : querySet,
 		"function" : "List"
