@@ -14,7 +14,7 @@
 					{% endif %}
 					<div class="caption">
 						<h3><a href='/posts/{{ post.id }}/'>{{ post.title }}</a> <small><a href="{{ post.get_absolute_url }}">{{ post.posted | timesince }} ago</a></small></h3>
-						<p><a href='{% url "posts:detail" id=post.id %}'><!-- {% lorem %} -->{{ post.content | truncatechars:140 | linebreaks }}</a></p>
+						<p><a href='{% url "posts:detail" slug=post.slug %}'><!-- {% lorem %} -->{{ post.content | truncatechars:140 | linebreaks }}</a></p>
 						<p><a href="{{ post.get_absolute_url }}" class="btn btn-primary" role="button">View Post</a></p>
 					</div>
 				</div>
