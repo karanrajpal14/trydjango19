@@ -4,7 +4,7 @@ from django.contrib import admin
 from .models import Post
 
 class PostModelAdmin(admin.ModelAdmin):
-	list_display = ["title","posted","last_updated"]
+	list_display = ["title","posted","last_updated","slug"]
 	list_display_links = ["last_updated"]
 	list_filter = ["posted","last_updated"]
 	list_editable = ["title"]
