@@ -10,24 +10,25 @@
 <div class="col-sm-6 col-sm-offset-3">
 
 	<h1>{{ instance.title }} <small>{{ instance.posted }}</small></h1>
+	<br>
+	{% if instance.user.get_full_name %}
+	<h5>Author: {{ instance.user.get_full_name }}</h5>
+	{% else %}
+	<h5>Username: {{ instance.user }}</h5>
+	{% endif %}
+	<br>
 	{% if instance.image %}
 	<img src="{{ instance.image.url }}" class="img-responsive">
 	{% endif %}
 	{{ instance.content | linebreaks }}
 
-	<a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
-		Facebook
-	</a>
+	<a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">Facebook</a>
 
-	<a href="https://twitter.com/home?status={{ instance.content | truncatechars:100 | urlify }}{{ request.build_absolute_uri }}">
-		Twitter
-	</a>
+	<a href="https://twitter.com/home?status={{ instance.content | truncatechars:100 | urlify }}{{ request.build_absolute_uri }}">Twitter</a>
 
 	<a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>Google Plus</a>
 
-	<a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build.build_absolute_uri }}&title={{ instance.title | truncatechars:100 | urlify }}&summary={{ instance.content | truncatechars:100 | urlify }}&source={{ request.build_absolute_uri }}">
-		Linkedin
-	</a>
+	<a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build.build_absolute_uri }}&title={{ instance.title | truncatechars:100 | urlify }}&summary={{ instance.content | truncatechars:100 | urlify }}&source={{ request.build_absolute_uri }}">Linkedin</a>
 
 	<a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ instance.title | truncatechars:100 | urlify }}">Reddit</a>
 
