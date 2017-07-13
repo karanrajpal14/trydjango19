@@ -25,6 +25,8 @@ class Post(models.Model):
 		width_field="width_field",
 		height_field="height_field")
 	
+	draft = models.BooleanField(default=False)
+	publish_date = models.DateField(auto_now=False, auto_now_add=False)
 	content = models.TextField()
 	last_updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 	posted = models.DateTimeField(auto_now=False, auto_now_add=True)

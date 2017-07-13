@@ -9,8 +9,7 @@
 
 <div class="col-sm-6 col-sm-offset-3">
 
-	<h1>{{ instance.title }} <small>{{ instance.posted }}</small></h1>
-	<br>
+	<h1>{{ instance.title }} <small>{% if instance.draft %}<span style="color: red;">Draft </span>{% endif %}{{ instance.publish_date }}</small></h1>
 	{% if instance.user.get_full_name %}
 	<h5>Author: {{ instance.user.get_full_name }}</h5>
 	{% else %}
