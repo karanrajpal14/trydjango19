@@ -64,7 +64,7 @@ def post_detail(request, slug):
 def post_list(request):
 	# Ordering by latest post
 	# Can also do this in the model directly
-	querySet_list = Post.objects.all()
+	querySet_list = Post.objects.active()
 	#.filter(draft=False, publish_date__lte=timezone.now())
 	#.order_by("-posted")
 

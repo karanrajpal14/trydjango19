@@ -14,7 +14,7 @@ def upload_location(instance, filename):
 
 # Model Manager for filtering posts
 class PostManager(models.Manager):
-	def all(self, *args, **kwargs):
+	def active(self, *args, **kwargs):
 		# Post.objects.all() = super(PostManager, self).all()
 		return super(PostManager, self).filter(draft=False, publish_date__lte=timezone.now())
 
