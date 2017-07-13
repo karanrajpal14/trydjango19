@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Q
 from django.utils import timezone
 
 def post_create(request):
@@ -75,8 +76,16 @@ def post_list(request):
 	#.filter(draft=False, publish_date__lte=timezone.now())
 	#.order_by("-posted")
 
+	query = request.GET.get("q")
+	if query:
+		querySet_list = Post.objects.filter(
+			Q(title__icontains=query) |
+			Q(content__icontains=query) |
+			Q(user__first_name__icontains=query) |
+			Q(user__last_name__icontains=query)
+			).distinct()
 
-	paginator = Paginator(querySet_list, 10) # Show 25 querySet per page
+	paginator = Paginator(querySet_list, 1) # Show x posts per page
 
 	page_request_var = 'page'
 	page = request.GET.get(page_request_var)
@@ -94,7 +103,7 @@ def post_list(request):
 		"function" : "List",
 		"today" : today,
 	}
-	
+
 	return render(request, "post_list.html", context)
 
 def post_delete(request, slug=None):
