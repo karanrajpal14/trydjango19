@@ -13,6 +13,8 @@
 					<img src="{{ post.image.url }}" class="img-responsive">
 					{% endif %}
 					<div class="caption">
+						{% if post.draft %}<small style="color: red;">Staff Only: Draft</small>{% endif %}
+						{% if post.publish_date > today %}<small style="color: red;">Staff Only: Future Post</small>{% endif %}
 						<h3><a href='/posts/{{ post.slug }}/'>{{ post.title }}</a> <small><a href="{{ post.get_absolute_url }}">{{ post.publish_date }}</a></small></h3>
 						{% if post.user.get_full_name %}
 						<p>Author: {{ post.user.get_full_name }}</p>

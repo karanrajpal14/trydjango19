@@ -56,17 +56,25 @@ def post_update(request, slug=None):
 
 def post_detail(request, slug):
 	instance = get_object_or_404(Post, slug=slug)
+	if instance.draft or instance.publish_date > timezone.now().date():
+		if not request.user.is_staff or not request.user.is_superuser:
+			raise Http404
 	context = {
 		"instance" : instance,
 	}
 	return render(request, "post_detail.html", context)
 
 def post_list(request):
+	today = timezone.now().date()
+	if not request.user.is_staff or not request.user.is_superuser:
+		querySet_list = Post.objects.active()
+	else:
 	# Ordering by latest post
 	# Can also do this in the model directly
-	querySet_list = Post.objects.active()
+		querySet_list = Post.objects.all()
 	#.filter(draft=False, publish_date__lte=timezone.now())
 	#.order_by("-posted")
+
 
 	paginator = Paginator(querySet_list, 10) # Show 25 querySet per page
 
@@ -83,8 +91,10 @@ def post_list(request):
 
 	context = {
 		"listOfPosts" : querySet,
-		"function" : "List"
+		"function" : "List",
+		"today" : today,
 	}
+	
 	return render(request, "post_list.html", context)
 
 def post_delete(request, slug=None):
