@@ -16,24 +16,41 @@
 	{% else %}
 	<h5>Username: {{ instance.user }}</h5>
 	{% endif %}
-	<br>
 	{% if instance.image %}
 	<img src="{{ instance.image.url }}" class="img-responsive">
 	{% endif %}
-	{{ instance.content | linebreaks }}
+	<hr>
 
-	<a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">Facebook</a>
+	<div class="row">
+		<div class="col-sm-12">
+			{{ instance.content | linebreaks }}	
+		</div>
+	</div>
+	
+	<hr>
 
-	<a href="https://twitter.com/home?status={{ instance.content | truncatechars:100 | urlify }}{{ request.build_absolute_uri }}">Twitter</a>
+	<!-- Facebook like button -->
+	<div class="col-sm-12">
+		<div class="row">
+			<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-action="recommend" data-size="large" data-show-faces="false" data-share="false"></div>
 
-	<a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>Google Plus</a>
+			<br><br>
+			<a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">Facebook</a>
 
-	<a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build.build_absolute_uri }}&title={{ instance.title | truncatechars:100 | urlify }}&summary={{ instance.content | truncatechars:100 | urlify }}&source={{ request.build_absolute_uri }}">Linkedin</a>
+			<a href="https://twitter.com/home?status={{ instance.content | truncatechars:100 | urlify }}{{ request.build_absolute_uri }}">Twitter</a>
 
-	<a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ instance.title | truncatechars:100 | urlify }}">Reddit</a>
+			<a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>Google Plus</a>
+
+			<a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build.build_absolute_uri }}&title={{ instance.title | truncatechars:100 | urlify }}&summary={{ instance.content | truncatechars:100 | urlify }}&source={{ request.build_absolute_uri }}">Linkedin</a>
+
+			<a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ instance.title | truncatechars:100 | urlify }}">Reddit</a>		
+		</div>
+	</div>
+	
+	<hr>
 
 	<!-- Facebook comments -->
-	<div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-numposts="5"></div>
+	<div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="2"></div>
 
 </div>
 
