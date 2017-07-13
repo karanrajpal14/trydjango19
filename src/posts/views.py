@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
 
 def post_create(request):
 	if not request.user.is_staff or not request.user.is_superuser:
@@ -63,7 +64,7 @@ def post_detail(request, slug):
 def post_list(request):
 	# Ordering by latest post
 	# Can also do this in the model directly
-	querySet_list = Post.objects.all()#.order_by("-posted")
+	querySet_list = Post.objects.filter(draft=False, publish_date__lte=timezone.now())#.all()#.order_by("-posted")
 
 	paginator = Paginator(querySet_list, 10) # Show 25 querySet per page
 
