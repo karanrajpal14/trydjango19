@@ -1,5 +1,5 @@
-from urllib.parse import quote_plus
 from django import template
+from urllib.parse import quote_plus
 
 register = template.Library()
 

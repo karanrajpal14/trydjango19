@@ -1,7 +1,6 @@
-from django.contrib import admin
-
 # Register your models here.
 from .models import Post
+from django.contrib import admin
 
 class PostModelAdmin(admin.ModelAdmin):
 	list_display = ["title","posted","last_updated","slug"]
